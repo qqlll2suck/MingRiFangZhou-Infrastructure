@@ -1,4 +1,6 @@
 import json
+from const import DataConst
+
 
 CHARACTER_JSON = r"./character.json"
 DATABASE_JSON = r"./database.json"
@@ -20,7 +22,7 @@ def get_my_character():
     with open(CHARACTER_JSON, "r", encoding='utf-8') as file:
         CHARACTER_LIST = json.load(file)
     for character in CHARACTER_LIST:
-        if character["own"] != True:
+        if character[DataConst.CHARACTER_OWN] != True:
             CHARACTER_LIST.remove(character)
 
 def check_database():
@@ -31,34 +33,26 @@ def check_database():
     with open(DATABASE_JSON, "r", encoding='utf-8') as file:
         database = json.load(file)
     for owned_character in CHARACTER_LIST:
-        character = database[owned_character["name"]]
+        character = database[owned_character[DataConst.CHARACTER_NAME]]
 
-        if character["type"] == "Gold":
+        if character[DataConst.SKILL_PRODUCT_TYPE] == DataConst.TYPE_METAL:
             GOLD_CHARACTER_LIST.append(character)
-        elif character["type"] == "Level":
+        elif character[DataConst.SKILL_PRODUCT_TYPE] == DataConst.TYPE_LEVEL:
             LEVEL_CHARACTER_LIST.append(character)
-        elif character["type"] == "Money":
+        elif character[DataConst.SKILL_PRODUCT_TYPE] == DataConst.TYPE_MONEY:
             MONEY_CHARACTER_LIST.append(character)
-        elif character["type"] == "All":
+        elif character[DataConst.SKILL_PRODUCT_TYPE] == DataConst.TYPE_ALL:
             ALL_CHARACTER_LIST.append(character)
 
-        if character["storage_skill"] != None:
+        if character[DataConst.SKILL_STORAGE] != None:
             STORAGE_CHARACTER_LIST.append(character)
 
-        if character["mood_skill"] != None:
+        if character[DataConst.SKILL_MOOD] != None:
             MOOD_CHARACTER_LIST.append(character)
 
 def room_make():
-    '''
-    有4个LEVEL房间, 1个GOLD房间
-    每个房间需要2个队列, 每个队列需要3个角色
-
-    优先逻辑:
-    每个房间优先使用对应类型的角色, 如果不够则使用ALL类型的角色补充
-    每个角色只能使用一次
-    每个队列中不能有重复角色
-    每个队列中最多有一个仓库技能角色,最好每个队列都有仓库技能角色
-    '''
+    # TODO 
+    pass
 
 
 if __name__ == "__main__":
